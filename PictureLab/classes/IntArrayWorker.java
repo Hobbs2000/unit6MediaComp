@@ -98,5 +98,61 @@ public class IntArrayWorker
       }
     }
   }
- 
+  
+  
+  /**
+   * 
+   */
+  public int getCount(int passedNum) 
+  {
+      int count = 0;
+      for (int row = 0; row < this.matrix.length; row++)
+      {
+          for (int col = 0; col < this.matrix[row].length; col++)
+          {
+              if (this.matrix[row][col] == passedNum)
+              {
+                  count++;
+              }
+          }
+      }
+      
+      return count;
+  }
+  
+  
+  /**
+   * 
+   */
+  public int getLargest()
+  {
+      int largest = 0;
+      for (int row = 0; row < this.matrix.length; row++)
+      {
+          for (int col = 0; col < this.matrix[row].length; col++)
+          {
+              if (this.matrix[row][col] > largest)
+              {
+                  largest = this.matrix[row][col];
+              }
+          }
+      }
+      
+      return largest;
+  }
+  
+  
+  /**
+   * 
+   */
+  public int getColTotal(int col)
+  {
+      int total = 0;
+      for (int row = 0; row < this.matrix.length; row++)
+      {
+          total += this.matrix[row][col];
+      }
+      
+      return total;
+  }
 }

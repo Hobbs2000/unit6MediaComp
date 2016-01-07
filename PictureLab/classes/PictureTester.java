@@ -51,6 +51,14 @@ public class PictureTester
     swan.explore();
   }
   
+  /** Method to test if the right side of picture is mirrored on the side */
+  public static void testMirrorVerticalRightToLeft()
+  {
+      Picture galaxy = new Picture("galaxy.jpg");
+      galaxy.mirrorVerticalRightToLeft();
+      galaxy.explore();
+  }
+  
   /** Main method for testing.  Every class can have a main
     * method in Java */
   public static void main(String[] args)
@@ -66,6 +74,7 @@ public class PictureTester
     //testGrayscale();
     //testFixUnderwater();
     //testMirrorVertical();
+    testMirrorVerticalRightToLeft();
     //testMirrorTemple();
     //testMirrorArms();
     //testMirrorGull();
