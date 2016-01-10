@@ -227,7 +227,6 @@ public class Picture extends SimplePicture
       Pixel leftPixel = null;
       Pixel rightPixel = null;
       int width = pixels[0].length;
-      
       for (int row = 0; row < pixels.length; row++)
       {
           for (int col = 0; col < width / 2; col++)
@@ -248,52 +247,7 @@ public class Picture extends SimplePicture
       Pixel[][] pixels = this.getPixels2D();
       Pixel topPixel = null;
       Pixel bottomPixel = null;
-      int height = pixels.length;
-      
-      for (int row = 0; row < height/2; row++)
-      {
-          for (int col = 0; col < pixels[row].length; col++)
-          {
-              topPixel = pixels[row][col];
-              bottomPixel = pixels[height - 1 - row][col];
-              bottomPixel.setColor(topPixel.getColor());
-          }
-      }
   }
-  
-  
-  /**
-   * 
-   */
-  public void mirrorHorizontalBottomToTop()
-  {
-      Pixel[][] pixels = this.getPixels2D();
-      Pixel topPixel = null;
-      Pixel bottomPixel = null;
-      int height = pixels.length;
-      
-      for (int row = 0; row < height/2; row++)
-      {
-          for (int col = 0; col < pixels[row].length; col++)
-          {
-              topPixel = pixels[row][col];
-              bottomPixel = pixels[height - 1 - row][col];
-              topPixel.setColor(bottomPixel.getColor());
-          }
-      }
-  }
-  
-  
-  /**
-   * 
-   */
-  public void mirrorDiagonal(int x1, int y1, int x2, int y2)
-  {
-      Pixel[][] pixels = this.getPixels2D();
-      Pixel rightPoint = pixels[x1][y1];
-      Pixel leftPoint = pixels[x2][y2];
-  }
- 
   
   /* Main method for testing - each class in Java can have a main 
    * method 
