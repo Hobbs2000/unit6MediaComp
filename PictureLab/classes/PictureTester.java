@@ -59,6 +59,22 @@ public class PictureTester
       galaxy.explore();
   }
   
+  /** Method to test if the top half of a picture is mirrored to the bottom half */
+  public static void testMirrorHorizontal()
+  {
+      Picture galaxy = new Picture("galaxy.jpg");
+      galaxy.mirrorHorizontal();
+      galaxy.explore();
+  }
+ 
+  /** Method to test if the bottom half of a picture is mirrored to the top half */
+  public static void testMirrorHorizontalBottomToTop()
+  {
+      Picture galaxy = new Picture("galaxy.jpg");
+      galaxy.mirrorHorizontalBottomToTop();
+      galaxy.explore();
+  }
+  
   /** Main method for testing.  Every class can have a main
     * method in Java */
   public static void main(String[] args)
@@ -75,6 +91,8 @@ public class PictureTester
     //testFixUnderwater();
     //testMirrorVertical();
     testMirrorVerticalRightToLeft();
+    testMirrorHorizontal();
+    testMirrorHorizontalBottomToTop();
     //testMirrorTemple();
     //testMirrorArms();
     //testMirrorGull();
