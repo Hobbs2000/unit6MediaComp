@@ -98,6 +98,23 @@ public class Picture extends SimplePicture
     }
   }
   
+  
+  /**
+   * 
+   */
+  public void keepOnlyBlue()
+  {
+      Pixel[] pixels = this.getPixels();
+      for (int i = 0; i < pixels.length; i++)
+      {
+          int newRed = 0;
+          int newGreen = 0;
+          int currentBlue = pixels[i].getBlue();
+          pixels[i].setColor(new Color(newRed, newGreen, currentBlue));
+      }
+  }
+  
+  
   /** Method that mirrors the picture around a 
     * vertical mirror in the center of the picture
     * from left to right */
@@ -292,6 +309,71 @@ public class Picture extends SimplePicture
       Pixel[][] pixels = this.getPixels2D();
       Pixel rightPoint = pixels[x1][y1];
       Pixel leftPoint = pixels[x2][y2];
+  }
+  
+  
+  /**
+   * 
+   */
+  public void negate()
+  {
+      Pixel[] pixels = this.getPixels();
+      for (int i = 0; i < pixels.length; i++)
+      {
+          int newRed = 255 - pixels[i].getRed();
+          int newGreen = 255 - pixels[i].getGreen();
+          int newBlue = 255 - pixels[i].getBlue();
+          pixels[i].setColor(new Color(newRed, newGreen, newBlue));
+      }
+  }
+  
+  
+  /**
+   * 
+   */
+  public void grayScale()
+  {
+      Pixel[] pixels = this.getPixels();
+      for (int i = 0; i < pixels.length; i++)
+      {
+          int average = (pixels[i].getRed() + pixels[i].getGreen() + pixels[i].getBlue()) / 3;
+          pixels[i].setColor( new Color(average, average, average) );
+      }
+  }
+  
+  
+  /**
+   * 
+   */
+  public void fixUnderWater()
+  {
+      Pixel[] pixels = this.getPixels();
+      for (int i = 0; i < pixels.length; i++)
+      {
+          int currentRed = pixels[i].getRed();
+          int currentGreen = pixels[i].getGreen();
+          int currentBlue = pixels[i].getBlue();
+          if (currentGreen > 120 || currentBlue > 120)
+          {
+              //Lower to the green and blue values to lower the underwater vision
+              //And increase detail
+              int newGreen = currentGreen - 100;
+              int newBlue = currentBlue - 100;
+              
+              //Brighten the whole image to make the details even more visible
+              int newRed = (int)(currentRed * 1.8);
+              if (newRed > 255)
+                newRed = 255;
+              newGreen *= 1.8;
+              if (newGreen > 255)
+                newGreen = 255;
+              newBlue *= 1.8;
+              if (newBlue > 255)
+                newBlue = 255;
+                
+              pixels[i].setColor( new Color(newRed, newGreen, newBlue) );
+          } 
+      }
   }
  
   

@@ -75,6 +75,36 @@ public class PictureTester
       galaxy.explore();
   }
   
+  public static void testKeepOnlyBlue()
+  {
+      Picture galaxy = new Picture("galaxy.jpg");
+      galaxy.keepOnlyBlue();
+      galaxy.explore();
+  }
+  
+  public static void testNegate()
+  {
+      Picture galaxy = new Picture("galaxy.jpg");
+      galaxy.negate();
+      galaxy.explore();
+  }
+  
+  public static void testGrayScale()
+  {
+      Picture galaxy = new Picture("galaxy.jpg");
+      galaxy.grayScale();
+      galaxy.explore();
+  }
+  
+  public static void testFixUnderWater()
+  {
+      Picture water = new Picture("water.jpg");
+      water.explore();
+      
+      water.fixUnderWater();
+      water.explore();
+  }
+  
   /** Main method for testing.  Every class can have a main
     * method in Java */
   public static void main(String[] args)
@@ -82,7 +112,7 @@ public class PictureTester
     // uncomment a call here to run a test
     // and comment out the ones you don't want
     // to run
-    testZeroBlue();
+    //testZeroBlue();
     //testKeepOnlyBlue();
     //testKeepOnlyRed();
     //testKeepOnlyGreen();
@@ -90,9 +120,9 @@ public class PictureTester
     //testGrayscale();
     //testFixUnderwater();
     //testMirrorVertical();
-    testMirrorVerticalRightToLeft();
-    testMirrorHorizontal();
-    testMirrorHorizontalBottomToTop();
+    //testMirrorVerticalRightToLeft();
+    //testMirrorHorizontal();
+    //testMirrorHorizontalBottomToTop();
     //testMirrorTemple();
     //testMirrorArms();
     //testMirrorGull();
@@ -107,5 +137,6 @@ public class PictureTester
     //testSetRedToHalfValueInTopHalf();
     //testClearBlueOverValue(200);
     //testGetAverageForColumn(0);
+    testFixUnderWater();
   }
 }
