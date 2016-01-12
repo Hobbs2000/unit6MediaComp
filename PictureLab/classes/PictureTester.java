@@ -105,6 +105,16 @@ public class PictureTester
       water.explore();
   }
   
+  public static void testCropAndCopy()
+  {
+      Picture galaxy = new Picture("galaxy.jpg");
+      Picture water =  new Picture("water.jpg");
+      
+      galaxy.cropAndCopy(water, 0, 250, 0, 300, 500, 500);
+      galaxy.explore();
+      water.explore();
+  }
+  
   /** Main method for testing.  Every class can have a main
     * method in Java */
   public static void main(String[] args)

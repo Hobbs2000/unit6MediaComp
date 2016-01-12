@@ -353,7 +353,7 @@ public class Picture extends SimplePicture
           int currentRed = pixels[i].getRed();
           int currentGreen = pixels[i].getGreen();
           int currentBlue = pixels[i].getBlue();
-          if (currentGreen > 120 || currentBlue > 120)
+          if (currentGreen > 100 || currentBlue > 100)
           {
               //Lower to the green and blue values to lower the underwater vision
               //And increase detail
@@ -361,18 +361,41 @@ public class Picture extends SimplePicture
               int newBlue = currentBlue - 100;
               
               //Brighten the whole image to make the details even more visible
-              int newRed = (int)(currentRed * 1.8);
+              int newRed = (int)(currentRed * 2);
               if (newRed > 255)
                 newRed = 255;
-              newGreen *= 1.8;
+              newGreen *= 2;
               if (newGreen > 255)
                 newGreen = 255;
-              newBlue *= 1.8;
+              newBlue *= 2;
               if (newBlue > 255)
                 newBlue = 255;
                 
               pixels[i].setColor( new Color(newRed, newGreen, newBlue) );
           } 
+      }
+  }
+  
+  
+  /**
+   * 
+   */
+  public void cropAndCopy(Picture sourcePicture, int startSourceRow, int endSourceRow,
+  int startSourceCol, int endSourceCol, int startDestRow, int startDestCol)
+  {
+      Pixel[][] sourcePixels = sourcePicture.getPixels2D();
+      Pixel[][] currentPicPixels = this.getPixels2D();
+      int newRow = startDestRow;
+      int newCol = startDestCol;
+      for (int row = startSourceRow; row < endSourceRow; row++)
+      {
+          newRow++;
+          for (int col = startSourceCol; col < endSourceCol; col++)
+          {
+              newCol++;
+              currentPicPixels[newRow][newCol].setColor(sourcePixels[row][col].getColor());
+          }
+          newCol = 0;
       }
   }
  
