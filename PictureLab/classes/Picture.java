@@ -304,11 +304,44 @@ public class Picture extends SimplePicture
   /**
    * 
    */
-  public void mirrorDiagonal(int x1, int y1, int x2, int y2)
+  public void dotFilter(int dot_seperation)
   {
       Pixel[][] pixels = this.getPixels2D();
-      Pixel rightPoint = pixels[x1][y1];
-      Pixel leftPoint = pixels[x2][y2];
+      
+      Pixel rightPixel = null;
+      Pixel leftPixel = null;
+      
+      for (int row = 0; row < pixels.length; row+=dot_seperation)
+      {
+          for (int col = 0; col < pixels[row].length; col+=dot_seperation)
+          {
+              rightPixel = pixels[row][col];
+              leftPixel = pixels[this.getHeight() - 1 - row][this.getWidth() - 1 - col];
+              rightPixel.setColor(leftPixel.getColor());
+          }
+      }
+  }
+  
+  
+  /**
+   * 
+   */
+  public void verticalLineFilter(int line_seperation)
+  {
+      Pixel[][] pixels = this.getPixels2D();
+      
+      Pixel rightPixel = null;
+      Pixel leftPixel = null;
+      
+      for (int row = 0; row < pixels.length; row++)
+      {
+          for (int col = 0; col < pixels[row].length; col+=line_seperation)
+          {
+              rightPixel = pixels[row][col];
+              leftPixel = pixels[this.getHeight() - 1 - row][this.getWidth() - 1 - col];
+              rightPixel.setColor(Color.BLACK);
+          }
+      }
   }
   
   
@@ -397,8 +430,8 @@ public class Picture extends SimplePicture
           }
           newCol = 0;
       }
-  }
- 
+  } 
+  
   
   /* Main method for testing - each class in Java can have a main 
    * method 

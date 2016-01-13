@@ -75,6 +75,20 @@ public class PictureTester
       galaxy.explore();
   }
   
+  public static void testDotFilter()
+  {
+      Picture galaxy = new Picture("galaxy.jpg");
+      galaxy.dotFilter(2);
+      galaxy.explore();
+  }
+  
+  public static void testVerticalLineFilter()
+  {
+      Picture galaxy = new Picture("galaxy.jpg");
+      galaxy.verticalLineFilter(3);
+      galaxy.explore();
+  }
+  
   public static void testKeepOnlyBlue()
   {
       Picture galaxy = new Picture("galaxy.jpg");
