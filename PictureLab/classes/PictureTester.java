@@ -85,7 +85,14 @@ public class PictureTester
   public static void testVerticalLineFilter()
   {
       Picture galaxy = new Picture("galaxy.jpg");
-      galaxy.verticalLineFilter(3);
+      galaxy.verticalLineFilter(4);
+      galaxy.explore();
+  }
+  
+  public static void testHorizontalLineFilter()
+  {
+      Picture galaxy = new Picture("galaxy.jpg");
+      galaxy.horizontalLineFilter(4);
       galaxy.explore();
   }
   

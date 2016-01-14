@@ -348,6 +348,28 @@ public class Picture extends SimplePicture
   /**
    * 
    */
+  public void horizontalLineFilter(int line_seperation)
+  {
+      Pixel[][] pixels = this.getPixels2D();
+      
+      Pixel rightPixel = null;
+      Pixel leftPixel = null;
+      
+      for (int row = 0; row < pixels.length; row+=line_seperation)
+      {
+          for (int col = 0; col < pixels[row].length; col++)
+          {
+              rightPixel = pixels[row][col];
+              leftPixel = pixels[this.getHeight() - 1 - row][this.getWidth() - 1 - col];
+              rightPixel.setColor(Color.BLACK);
+          }
+      }
+  }
+  
+  
+  /**
+   * 
+   */
   public void negate()
   {
       Pixel[] pixels = this.getPixels();
