@@ -75,6 +75,13 @@ public class PictureTester
       galaxy.explore();
   }
   
+  public static void testMirrorDiagonal()
+  {
+      Picture galaxy = new Picture("galaxy.jpg");
+      galaxy.mirrorDiagonal();
+      galaxy.explore();
+  }
+  
   public static void testDotFilter()
   {
       Picture galaxy = new Picture("galaxy.jpg");
