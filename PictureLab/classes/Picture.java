@@ -306,16 +306,17 @@ public class Picture extends SimplePicture
       Pixel[][] pixels = this.getPixels2D();
       Pixel rightPixel = null;
       Pixel leftPixel = null;
-      int shift = 0;
       for (int row = 0; row < pixels.length; row++)
       {
-          for (int col = shift; col < pixels[row].length; col++)
+          for (int col = 0; col < pixels[row].length; col++)
           {
-              leftPixel = pixels[row][col];
-              rightPixel = pixels[row][pixels[row].length - 1 - col];
-              rightPixel.setColor(leftPixel.getColor());
+              if (col < pixels.length)
+              {
+                  rightPixel = pixels[row][col];
+                  leftPixel = pixels[col][row];
+                  rightPixel.setColor(leftPixel.getColor());
+              }
           }
-          shift++;
       }
   }
   
@@ -467,7 +468,14 @@ public class Picture extends SimplePicture
           for (int col = startSourceCol; col < endSourceCol; col++)
           {
               newCol++;
-              currentPicPixels[newRow][newCol].setColor(sourcePixels[row][col].getColor());
+              int averageRed = (sourcePixels[row][col].getRed() + currentPicPixels[newRow][newCol].getRed())/2;
+              int averageGreen = (sourcePixels[row][col].getGreen() + currentPicPixels[newRow][newCol].getGreen())/2;
+              int averageBlue = (sourcePixels[row][col].getBlue() + currentPicPixels[newRow][newCol].getBlue())/2;
+              //currentPicPixels[newRow][newCol].setColor(sourcePixels[row][col].getColor());
+              currentPicPixels[newRow][newCol].setRed(averageRed+3);
+              currentPicPixels[newRow][newCol].setGreen(averageGreen);
+              currentPicPixels[newRow][newCol].setBlue(averageBlue);
+              
           }
           newCol = 0;
       }
