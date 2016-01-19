@@ -302,9 +302,9 @@ public class Pixel
    */
   public void setAlpha(int value)
   {
-    // make sure that the alpha is from 0 to 255 
+    // make sure that the alpha is from 0 to 255 Fupdate
     int alpha = correctValue(value);
-    
+   
     // update the associated picture
     updatePicture(alpha, getRed(), getGreen(), getBlue());
   } 

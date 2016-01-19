@@ -416,6 +416,24 @@ public class Picture extends SimplePicture
       }
   }
   
+  /**
+   * 
+   */
+  public void setWhiteBackgroundToTransparent()
+  {
+      Pixel[] pixels = this.getPixels();
+      for (int i = 0; i < pixels.length; i++)
+      {
+          int red = pixels[i].getRed();
+          int green = pixels[i].getGreen();
+          int blue = pixels[i].getBlue();
+          if (red > 250 && green > 250 && blue > 250)
+          {
+              pixels[i].setAlpha(255);
+          }
+      }
+  }
+  
   
   /**
    * 
@@ -456,7 +474,7 @@ public class Picture extends SimplePicture
    * 
    */
   public void cropAndCopy(Picture sourcePicture, int startSourceRow, int endSourceRow,
-  int startSourceCol, int endSourceCol, int startDestRow, int startDestCol)
+  int startSourceCol, int endSourceCol, int startDestRow, int startDestCol, double alpha)
   {
       Pixel[][] sourcePixels = sourcePicture.getPixels2D();
       Pixel[][] currentPicPixels = this.getPixels2D();
@@ -468,16 +486,23 @@ public class Picture extends SimplePicture
           for (int col = startSourceCol; col < endSourceCol; col++)
           {
               newCol++;
-              int averageRed = (sourcePixels[row][col].getRed() + currentPicPixels[newRow][newCol].getRed())/2;
-              int averageGreen = (sourcePixels[row][col].getGreen() + currentPicPixels[newRow][newCol].getGreen())/2;
-              int averageBlue = (sourcePixels[row][col].getBlue() + currentPicPixels[newRow][newCol].getBlue())/2;
-              //currentPicPixels[newRow][newCol].setColor(sourcePixels[row][col].getColor());
-              currentPicPixels[newRow][newCol].setRed(averageRed+3);
-              currentPicPixels[newRow][newCol].setGreen(averageGreen);
-              currentPicPixels[newRow][newCol].setBlue(averageBlue);
+              
+              double transparency = alpha / 255;
+              double baseRed = currentPicPixels[newRow][newCol].getRed();
+              double overlayRed = sourcePixels[row][col].getRed();
+              double baseGreen = currentPicPixels[newRow][newCol].getGreen();
+              double overlayGreen = sourcePixels[row][col].getGreen();
+              double baseBlue = currentPicPixels[newRow][newCol].getBlue();
+              double overlayBlue = sourcePixels[row][col].getBlue();
+              
+              int newRed = (int)(transparency * overlayRed + ((1 - transparency) * baseRed));
+              int newGreen = (int)(transparency * overlayGreen + ((1 - transparency) * baseGreen));
+              int newBlue = (int)(transparency * overlayBlue + ((1 - transparency) * baseBlue));
+              
+              currentPicPixels[newRow][newCol].setColor(new Color(newRed, newGreen, newBlue));
               
           }
-          newCol = 0;
+          newCol = startDestCol;
       }
   } 
   
