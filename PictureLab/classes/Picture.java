@@ -344,6 +344,40 @@ public class Picture extends SimplePicture
   
   
   /**
+   * Brightens the image
+   */
+  public void brighten(double amount)
+  {
+      if (amount < 1)
+      {
+          amount = 1;
+      }
+      
+      Pixel[] pixels = this.getPixels();
+      for (int i = 0; i < pixels.length; i++)
+      {
+          int currentRed = pixels[i].getRed();
+          int currentGreen = pixels[i].getGreen();
+          int currentBlue = pixels[i].getBlue();
+
+          //Brighten the whole image to make the details even more visible
+          int newRed = (int)(currentRed * amount);
+          int newGreen = (int)(currentGreen * amount);
+          int newBlue = (int)(currentBlue * amount);
+              
+          if (newRed > 255)
+            newRed = 255;
+          if (newGreen > 255)
+            newGreen = 255;
+          if (newBlue > 255)
+            newBlue = 255;
+                
+          pixels[i].setColor( new Color(newRed, newGreen, newBlue) );
+      }
+  }
+  
+  
+  /**
    * 
    */
   public void verticalLineFilter(int line_seperation)
@@ -417,21 +451,11 @@ public class Picture extends SimplePicture
   }
   
   /**
-   * 
+   * Expected to be used in the crop and copy method
    */
-  public void setWhiteBackgroundToTransparent()
+  public void setWhiteBackgroundToTransparent(Pixel pixel)
   {
-      Pixel[] pixels = this.getPixels();
-      for (int i = 0; i < pixels.length; i++)
-      {
-          int red = pixels[i].getRed();
-          int green = pixels[i].getGreen();
-          int blue = pixels[i].getBlue();
-          if (red > 250 && green > 250 && blue > 250)
-          {
-              pixels[i].setAlpha(255);
-          }
-      }
+      
   }
   
   

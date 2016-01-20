@@ -25,6 +25,8 @@ public class Pixel
   /** the y (row) location of this pixel in the picture; (0,0) is top left */
   private int y; 
   
+  private double alpha;
+  
   ////////////////////// constructors /////////////////////////////////
   
   /** 
@@ -91,6 +93,11 @@ public class Pixel
     int alpha = (value >> 24) & 0xff;
     
     return alpha;
+  }
+  
+  double altGetAlpha()
+  {
+      return this.alpha;
   }
     
   
@@ -278,7 +285,7 @@ public class Pixel
   {
     // set the green value to the corrected value
     int green = correctValue(value);
-    
+     
     // update the pixel value in the picture
     updatePicture(getAlpha(), getRed(), green, getBlue());
   } 
@@ -308,6 +315,14 @@ public class Pixel
     // update the associated picture
     updatePicture(alpha, getRed(), getGreen(), getBlue());
   } 
+  
+  /**
+   * 
+   */
+  public void altSetAlpha(double value)
+  {
+      this.alpha = value;
+  }
   
   /**
   * Method to get the distance between this pixel's color and the passed color
