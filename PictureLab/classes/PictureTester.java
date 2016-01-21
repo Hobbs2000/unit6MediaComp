@@ -138,11 +138,18 @@ public class PictureTester
       Picture galaxy = new Picture("galaxy.jpg");
       Picture water =  new Picture("water.jpg");
       
-      galaxy.cropAndCopy(water, 0, 250, 0, 300, 500, 500, 255);
+      galaxy.cropAndCopy(water, 0, 250, 0, 300, 500, 500, false, 255);
       galaxy.explore();
       water.explore();
   }
   
+  public static void testFlip()
+  {
+      Picture galaxy = new Picture("SmallerGalaxy.jpg");
+      galaxy.explore();
+      galaxy.flip(new Picture("SmallerGalaxy.jpg"));
+      galaxy.explore();
+  }
   /** Main method for testing.  Every class can have a main
     * method in Java */
   public static void main(String[] args)

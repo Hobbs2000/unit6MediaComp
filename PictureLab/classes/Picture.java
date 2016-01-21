@@ -450,12 +450,30 @@ public class Picture extends SimplePicture
       }
   }
   
+  
   /**
-   * Expected to be used in the crop and copy method
+   * 
    */
-  public void setWhiteBackgroundToTransparent(Pixel pixel)
+  public void flip(Picture original)
   {
+      Pixel[][] changePixels = this.getPixels2D();
+      Pixel[][] staticPixels = original.getPixels2D();
+      int width = staticPixels[0].length;
+      int height = staticPixels.length;
+      Pixel leftPixel = null;
+      Pixel rightPixel = null;
       
+      for (int row = 0; row < staticPixels.length; row++)
+      {
+          for (int col = 0; col < staticPixels[row].length; col++)
+          {
+              leftPixel = changePixels[row][col];
+              rightPixel = staticPixels[row][width - col - 1];
+              leftPixel.setColor(rightPixel.getColor());
+          }
+      }
+      
+    
   }
   
   
@@ -493,14 +511,39 @@ public class Picture extends SimplePicture
       }
   }
   
+  /**
+   * Meant to only be used in the cropAndCopy method
+   */
+  public Pixel[][] keepForegroundPixels(Pixel[][] pixels)
+  {
+      for (int row = 0; row < pixels.length; row++)
+      {
+          for (int col = 0; col < pixels[row].length; col++)
+          {
+              if (pixels[row][col].getRed() > 200 &&
+                  pixels[row][col].getGreen() > 200 &&
+                  pixels[row][col].getBlue() > 200)
+              {
+                  pixels[row][col] = null;
+              }
+          }
+      }
+      
+      return pixels;
+  }
   
   /**
    * 
    */
   public void cropAndCopy(Picture sourcePicture, int startSourceRow, int endSourceRow,
-  int startSourceCol, int endSourceCol, int startDestRow, int startDestCol, double alpha)
+  int startSourceCol, int endSourceCol, int startDestRow, int startDestCol, boolean removeWhite, double alpha)
   {
       Pixel[][] sourcePixels = sourcePicture.getPixels2D();
+      if (removeWhite)
+      {
+          sourcePixels = keepForegroundPixels(sourcePixels);
+      }
+      
       Pixel[][] currentPicPixels = this.getPixels2D();
       int newRow = startDestRow;
       int newCol = startDestCol;
@@ -511,20 +554,22 @@ public class Picture extends SimplePicture
           {
               newCol++;
               
-              double transparency = alpha / 255;
-              double baseRed = currentPicPixels[newRow][newCol].getRed();
-              double overlayRed = sourcePixels[row][col].getRed();
-              double baseGreen = currentPicPixels[newRow][newCol].getGreen();
-              double overlayGreen = sourcePixels[row][col].getGreen();
-              double baseBlue = currentPicPixels[newRow][newCol].getBlue();
-              double overlayBlue = sourcePixels[row][col].getBlue();
+              if (sourcePixels[row][col] != null)
+              {
+                double transparency = alpha / 255;
+                double baseRed = currentPicPixels[newRow][newCol].getRed();
+                double overlayRed = sourcePixels[row][col].getRed();
+                double baseGreen = currentPicPixels[newRow][newCol].getGreen();
+                double overlayGreen = sourcePixels[row][col].getGreen();
+                double baseBlue = currentPicPixels[newRow][newCol].getBlue();
+                double overlayBlue = sourcePixels[row][col].getBlue();
+             
+                int newRed = (int)(transparency * overlayRed + ((1 - transparency) * baseRed));
+                int newGreen = (int)(transparency * overlayGreen + ((1 - transparency) * baseGreen));
+                int newBlue = (int)(transparency * overlayBlue + ((1 - transparency) * baseBlue));
               
-              int newRed = (int)(transparency * overlayRed + ((1 - transparency) * baseRed));
-              int newGreen = (int)(transparency * overlayGreen + ((1 - transparency) * baseGreen));
-              int newBlue = (int)(transparency * overlayBlue + ((1 - transparency) * baseBlue));
-              
-              currentPicPixels[newRow][newCol].setColor(new Color(newRed, newGreen, newBlue));
-              
+                currentPicPixels[newRow][newCol].setColor(new Color(newRed, newGreen, newBlue));
+              }
           }
           newCol = startDestCol;
       }
