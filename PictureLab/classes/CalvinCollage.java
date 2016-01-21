@@ -30,9 +30,10 @@ public class CalvinCollage
         galaxy_1.cropAndCopy(neil, 0, neil.getHeight()-1, 0, neil.getWidth()-1, 360, galaxy_1.getWidth() - neil.getWidth(), false, 100);
         
         galaxy_1.brighten(1.3);
-        //galaxy_1.horizontalLineFilter(2);
         
         galaxy_1.explore();
+        
+        galaxy_1.write("Galaxy_Collage.jpg");
         
     }
 }

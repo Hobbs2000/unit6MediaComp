@@ -472,8 +472,6 @@ public class Picture extends SimplePicture
               leftPixel.setColor(rightPixel.getColor());
           }
       }
-      
-    
   }
   
   
@@ -511,10 +509,64 @@ public class Picture extends SimplePicture
       }
   }
   
+  
+  /**
+   * 
+   */
+  public void pixelate()
+  {
+      Pixel[][] pixels = this.getPixels2D();
+      int[][] averages = new int[pixels.length/5][pixels[0].length/5];
+      
+      int colCount = 0;
+      int rowCount = 0;
+      
+      for(int i = 0;i < 10; i++)
+      {
+          int totalRed = 0;
+          int averageRed = 0;
+          int totalGreen = 0;
+          int averageGreen = 0;
+          int totalBlue = 0;
+          int averageBlue = 0;
+          
+          
+          int row = rowCount;
+          int col = colCount; 
+          //Get the average
+          for (; row < rowCount+5; row++)
+          {
+              for (; col < colCount+5; col++)
+              {
+                  totalRed += pixels[row][col].getRed();
+                  totalGreen += pixels[row][col].getGreen();
+                  totalBlue += pixels[row][col].getBlue();
+              }
+          }
+        
+          averageRed = totalRed / 5;
+          averageGreen = totalGreen / 5;
+          averageBlue = totalBlue / 5;
+          
+          for (; row < rowCount+5; row++)
+          {
+              for (; col < colCount+5; col++)
+              {
+                  pixels[row][col].setColor(new Color(averageRed, averageGreen, averageBlue));
+              }
+          }
+          
+          rowCount++;
+          colCount++;
+      }
+  }
+  
+  
   /**
    * Meant to only be used in the cropAndCopy method
+   * Go through all the pixels and sets any that are white to null
    */
-  public Pixel[][] keepForegroundPixels(Pixel[][] pixels)
+  public Pixel[][] removeWhiteBackground(Pixel[][] pixels)
   {
       for (int row = 0; row < pixels.length; row++)
       {
@@ -541,7 +593,7 @@ public class Picture extends SimplePicture
       Pixel[][] sourcePixels = sourcePicture.getPixels2D();
       if (removeWhite)
       {
-          sourcePixels = keepForegroundPixels(sourcePixels);
+          sourcePixels = removeWhiteBackground(sourcePixels);
       }
       
       Pixel[][] currentPicPixels = this.getPixels2D();
@@ -564,6 +616,7 @@ public class Picture extends SimplePicture
                 double baseBlue = currentPicPixels[newRow][newCol].getBlue();
                 double overlayBlue = sourcePixels[row][col].getBlue();
              
+                //Does the transparency calculations
                 int newRed = (int)(transparency * overlayRed + ((1 - transparency) * baseRed));
                 int newGreen = (int)(transparency * overlayGreen + ((1 - transparency) * baseGreen));
                 int newBlue = (int)(transparency * overlayBlue + ((1 - transparency) * baseBlue));
