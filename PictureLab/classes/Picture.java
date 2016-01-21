@@ -511,54 +511,72 @@ public class Picture extends SimplePicture
   
   
   /**
-   * 
+   * NOTE: The smaller the pixelSize the longer the pixelation process takes
    */
-  public void pixelate()
+  public void pixelate(int pixelSize)
   {
       Pixel[][] pixels = this.getPixels2D();
-      int[][] averages = new int[pixels.length/5][pixels[0].length/5];
+      
+      int blockSize = pixelSize;
       
       int colCount = 0;
       int rowCount = 0;
-      
-      for(int i = 0;i < 10; i++)
-      {
-          int totalRed = 0;
-          int averageRed = 0;
-          int totalGreen = 0;
-          int averageGreen = 0;
-          int totalBlue = 0;
-          int averageBlue = 0;
-          
-          
-          int row = rowCount;
-          int col = colCount; 
-          //Get the average
-          for (; row < rowCount+5; row++)
+     
+      Color averageColor = null;
+      for(int row = 0; row < pixels.length; row += blockSize)
+      { 
+          for (int col = 0; col < pixels[row].length; col += blockSize)
           {
-              for (; col < colCount+5; col++)
+              if (!((col + blockSize > pixels[0].length) || (row + blockSize > pixels.length)))
               {
-                  totalRed += pixels[row][col].getRed();
-                  totalGreen += pixels[row][col].getGreen();
-                  totalBlue += pixels[row][col].getBlue();
+                  averageColor = getAverageColor(row, col, row+blockSize, col+blockSize);
+              }
+              for (int row_2 = row; (row_2 < row + blockSize) && (row_2 < pixels.length); row_2++)
+              {
+                  for (int col_2 = col; (col_2 < col + blockSize) && (col_2 < pixels[0].length); col_2++)
+                  {
+                      pixels[row_2][col_2].setColor(averageColor);
+                  }
               }
           }
-        
-          averageRed = totalRed / 5;
-          averageGreen = totalGreen / 5;
-          averageBlue = totalBlue / 5;
-          
-          for (; row < rowCount+5; row++)
-          {
-              for (; col < colCount+5; col++)
-              {
-                  pixels[row][col].setColor(new Color(averageRed, averageGreen, averageBlue));
-              }
-          }
-          
-          rowCount++;
-          colCount++;
       }
+  }
+  
+  
+  /**
+   * 
+   */
+  public Color getAverageColor(int startRow, int startCol, int endRow, int endCol)
+  {
+      Pixel[][] pixels = this.getPixels2D();
+      
+      Color averageColor = null;
+      int totalPixels = (endRow - startRow)*(endCol - startCol);
+      
+      int totalRed = 0;
+      int averageRed = 0;
+      int totalGreen = 0;
+      int averageGreen = 0;
+      int totalBlue = 0;
+      int averageBlue = 0;
+      
+      for (int row = startRow; row < endRow; row++)
+      {
+          for (int col = startCol; col < endCol; col++)
+          {
+              totalRed += pixels[row][col].getRed();
+              totalGreen += pixels[row][col].getGreen();
+              totalBlue += pixels[row][col].getBlue();
+          }
+      }
+      
+      averageRed = totalRed / totalPixels;
+      averageGreen = totalGreen / totalPixels;
+      averageBlue = totalBlue / totalPixels;
+      
+      averageColor = new Color(averageRed, averageGreen, averageBlue);
+      
+      return averageColor;
   }
   
   

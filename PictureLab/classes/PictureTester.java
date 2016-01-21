@@ -150,6 +150,23 @@ public class PictureTester
       galaxy.flip(new Picture("SmallerGalaxy.jpg"));
       galaxy.explore();
   }
+  
+  public static void testPixelate()
+  {
+      Picture galaxy = new Picture("SmallerGalaxy.jpg");
+      galaxy.explore();
+      galaxy.pixelate(20);
+      galaxy.explore();
+  }
+  
+  public static void testGetAverageColor()
+  {
+      Picture water = new Picture("water.jpg");
+      water.explore();
+      water.getAverageColor(20, 10, 20, 20);
+      //water.explore();
+  }
+  
   /** Main method for testing.  Every class can have a main
     * method in Java */
   public static void main(String[] args)

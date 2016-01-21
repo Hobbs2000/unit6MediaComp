@@ -34,6 +34,10 @@ public class CalvinCollage
         galaxy_1.explore();
         
         galaxy_1.write("Galaxy_Collage.jpg");
+        System.out.println("Saved new picture");
+        
+        System.out.println("Pixelating... This can take some time");
+        galaxy_1.pixelate(20);
         
     }
 }
