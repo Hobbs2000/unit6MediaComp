@@ -526,7 +526,7 @@ public class Picture extends SimplePicture
           {
               if (!((col + blockSize > pixels[0].length) || (row + blockSize > pixels.length)))
               {
-                  averageColor = getAverageColor(row, col, row+blockSize, col+blockSize);
+                  averageColor = getAverageColor(row, col, row+blockSize, col+blockSize, pixels);
               }
               for (int row_2 = row; (row_2 < row + blockSize) && (row_2 < pixels.length); row_2++)
               {
@@ -543,9 +543,9 @@ public class Picture extends SimplePicture
   /**
    * 
    */
-  public Color getAverageColor(int startRow, int startCol, int endRow, int endCol)
+  public Color getAverageColor(int startRow, int startCol, int endRow, int endCol, Pixel[][] pixels)
   {
-      Pixel[][] pixels = this.getPixels2D();
+      //Pixel[][] pixels = this.getPixels2D();
       
       Color averageColor = null;
       int totalPixels = (endRow - startRow)*(endCol - startCol);

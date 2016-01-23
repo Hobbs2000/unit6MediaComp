@@ -155,7 +155,7 @@ public class PictureTester
   {
       Picture galaxy = new Picture("SmallerGalaxy.jpg");
       galaxy.explore();
-      galaxy.pixelate(20);
+      galaxy.pixelate(10);
       galaxy.explore();
   }
   
@@ -163,7 +163,8 @@ public class PictureTester
   {
       Picture water = new Picture("water.jpg");
       water.explore();
-      water.getAverageColor(20, 10, 20, 20);
+      Pixel[][] pixels = water.getPixels2D();
+      water.getAverageColor(20, 10, 20, 20, pixels);
       //water.explore();
   }
   
