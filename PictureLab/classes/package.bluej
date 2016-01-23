@@ -165,6 +165,7 @@ target5.editor.x=840
 target5.editor.y=0
 target5.height=50
 target5.name=CalvinCollage
+target5.naviview.expanded=false
 target5.showInterface=false
 target5.type=ClassTarget
 target5.typeParameters=

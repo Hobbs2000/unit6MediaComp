@@ -37,7 +37,9 @@ public class CalvinCollage
         System.out.println("Saved new picture");
         
         System.out.println("Pixelating... This can take some time");
-        galaxy_1.pixelate(20);
+        galaxy_1.pixelate(10);
+        galaxy_1.explore();
+        System.out.println("Done");
         
     }
 }

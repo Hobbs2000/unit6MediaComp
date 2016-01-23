@@ -518,9 +518,6 @@ public class Picture extends SimplePicture
       Pixel[][] pixels = this.getPixels2D();
       
       int blockSize = pixelSize;
-      
-      int colCount = 0;
-      int rowCount = 0;
      
       Color averageColor = null;
       for(int row = 0; row < pixels.length; row += blockSize)
